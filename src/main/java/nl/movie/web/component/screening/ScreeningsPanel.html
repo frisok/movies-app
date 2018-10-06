@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+<wicket:panel>
+
+    <div>
+        <table wicket:id="screenings">
+            <thead>
+            <tr class="headers">
+                <th>Stad</th>
+                <th>Bioscoop</th>
+                <th>Datum</th>
+                <th>Tijd</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="screenings">
+                <td><span wicket:id="screeningCity"></span></td>
+                <td><span wicket:id="screeningCinema"></span></td>
+                <td><span wicket:id="screeningStartDate"></span></td>
+                <td><span wicket:id="screeningStartTime"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</wicket:panel>
+</body>
+</html>
