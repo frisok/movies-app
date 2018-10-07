@@ -1,4 +1,4 @@
-package nl.movie.service.domain;
+package nl.movie.data.domain;
 
 import lombok.Getter;
 import lombok.Setter;

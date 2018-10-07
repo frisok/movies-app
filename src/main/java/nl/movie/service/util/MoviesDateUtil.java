@@ -48,4 +48,16 @@ public class MoviesDateUtil {
         return result;
     }
 
+    public static boolean inFuture(final String date2AsString) {
+
+        boolean result = false;
+
+        try {
+            result = new SimpleDateFormat(YYYY_MM_DD_T_HH_MM_SS).parse(date2AsString).after(new Date());
+        } catch (final Exception e) {
+        }
+
+        return result;
+    }
+
 }
