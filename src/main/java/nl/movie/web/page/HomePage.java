@@ -1,26 +1,30 @@
 package nl.movie.web.page;
 
-import nl.movie.service.UserService;
+import nl.movie.web.component.login.LoginPanel;
 import nl.movie.web.component.movie.MoviesPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 public class HomePage extends WebPage {
 
-    private static final long serialVersionUID = 1L;
-
-    @SpringBean
-    private UserService userService;
-
+    private static final long serialVersionUID = -5312778937959142886L;
 
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
+
+        add(new LoginPanel("login") {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(WebSession.get().getAttribute("authenticationToken") == null);
+            }
+        });
         add((new Label("title", new StringResourceModel("homePageTitle"))));
 
         final MoviesPanel moviesPanel = new MoviesPanel("movies-panel", () -> {

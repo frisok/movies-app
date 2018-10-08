@@ -24,10 +24,10 @@ public class MovieTest {
 
         final Movie movie = new Movie();
         final List<Screening> screenings = new ArrayList<>();
-        screenings.add(createScreening("cinema 1", DateUtils.addHours(new Date(), 1)));
-        screenings.add(createScreening("cinema 2", DateUtils.addHours(new Date(), 1)));
+        screenings.add(createScreening("cinema 1", DateUtils.addMinutes(new Date(), 1)));
+        screenings.add(createScreening("cinema 2", DateUtils.addMinutes(new Date(), 1)));
         screenings.add(createScreening("cinema 3", new SimpleDateFormat(MoviesDateUtil.DD_MM_YYYY).parse("01-01-2000")));
-        screenings.add(createScreening("cinema 4", DateUtils.addHours(new Date(), -1)));
+        screenings.add(createScreening("cinema 4", DateUtils.addMinutes(new Date(), -1)));
         movie.setScreenings(screenings);
 
         final String screeningsToday = movie.screeningsToday();

@@ -1,6 +1,6 @@
 package nl.movie.web.component.screening;
 
-import nl.movie.service.domain.Movie;
+import nl.movie.data.domain.Movie;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;

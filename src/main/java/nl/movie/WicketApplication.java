@@ -9,20 +9,16 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
  *
  */
 public class WicketApplication extends WebApplication {
-    /**
-     * @see org.apache.wicket.Application#getHomePage()
-     */
+
     @Override
     public Class<? extends WebPage> getHomePage() {
         return HomePage.class;
     }
 
-    /**
-     *
-     */
     @Override
     public void init() {
         super.init();
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+        mountPage("home", HomePage.class);
     }
 }

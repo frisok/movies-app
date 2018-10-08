@@ -1,7 +1,7 @@
 package nl.movie.web.component.movie;
 
+import nl.movie.data.domain.Movie;
 import nl.movie.service.MoviesRestClient;
-import nl.movie.service.domain.Movie;
 import nl.movie.web.component.image.ExternalSourceImage;
 import nl.movie.web.component.screening.ScreeningsAjaxLinkPanel;
 import nl.movie.web.component.screening.ScreeningsPanel;
@@ -130,8 +130,7 @@ public class MoviesPanel extends Panel {
 
     }
 
-
-    protected final PropertyColumn<Movie, String> createDetailsLinkColumn() {
+    private final PropertyColumn<Movie, String> createDetailsLinkColumn() {
         return new PropertyColumn<Movie, String>(new Model<>(""), "screeningsLink") {
 
             @Override
@@ -142,6 +141,5 @@ public class MoviesPanel extends Panel {
         };
 
     }
-
 }
 

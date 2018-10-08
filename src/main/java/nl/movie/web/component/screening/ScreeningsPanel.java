@@ -1,7 +1,7 @@
 package nl.movie.web.component.screening;
 
-import nl.movie.service.domain.Movie;
-import nl.movie.service.domain.Screening;
+import nl.movie.data.domain.Movie;
+import nl.movie.data.domain.Screening;
 import nl.movie.service.util.MoviesDateUtil;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
