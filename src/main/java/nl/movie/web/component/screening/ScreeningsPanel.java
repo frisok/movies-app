@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.StringResourceModel;
 
 import java.util.List;
 
@@ -29,11 +30,12 @@ public class ScreeningsPanel extends GenericPanel<Movie> {
     public ScreeningsPanel(final String id, final IModel<Movie> model) {
         super(id, model);
 
+        add(new Label("screeningPanelTitle", new StringResourceModel("screeningPanelTitle")));
+
         final Component screeningsComponenent = new WebMarkupContainer("screenings").add(new ListView<Screening>("screenings", new LoadableDetachableModel<List<Screening>>() {
             @Override
             protected List<Screening> load() {
                 List<Screening> result = (model.getObject().getScreenings());
-
                 return result;
             }
         }) {

@@ -92,4 +92,20 @@ public class MoviesRestClientImpl implements MoviesRestClient {
 
     }
 
+    @Override
+    public void updateMovies(final String authenticationToken) {
+
+        try {
+
+            final MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<>();
+            final HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.AUTHORIZATION, authenticationToken);
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(postParameters, headers);
+            new RestTemplate().postForEntity("http://localhost:8080/updatemovies", request, String.class);
+
+        } catch (final Exception e) {
+            log.warn("Error when calling http://localhost:8080/updatemovies", e);
+        }
+    }
+
 }

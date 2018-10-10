@@ -11,11 +11,16 @@
 </head>
 <body>
 
-
+<!-- nav bar-->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header navbar-right">
             <div wicket:id="login"/>
+            <form wicket:id="refreshForm" class="navbar-form">
+                <button wicket:id="refresh" type="submit" class="btn btn-success">
+                    <span wicket:id="refreshLabel"/>
+                </button>
+            </form>
         </div>
     </div>
 </nav>
@@ -31,16 +36,16 @@
 
         <div class="row">
             <div class="col-md-3">
-                <a href="#" wicket:id="link-amsterdam">Amsterdam</a>
+                <a href="#" wicket:id="link-amsterdam"><span wicket:id="amsterdam"/></a>
             </div>
             <div class="col-md-3">
-                <a href="#" wicket:id="link-rotterdam">Rotterdam</a>
+                <a href="#" wicket:id="link-rotterdam"><span wicket:id="rotterdam"/></a>
             </div>
             <div class="col-md-3">
-                <a href="#" wicket:id="link-utrecht">Utrecht</a>
+                <a href="#" wicket:id="link-utrecht"><span wicket:id="utrecht"/></a>
             </div>
             <div class="col-md-3">
-                <a href="#" wicket:id="link-all">Alle steden</a>
+                <a href="#" wicket:id="link-all"><span wicket:id="all"/></a>
             </div>
         </div>
     </div>
@@ -49,6 +54,7 @@
 
 <!-- body -->
 <div class="container">
+    <span wicket:id="feedback" class="form"/>
     <wicket:container wicket:id="movies-panel"/>
 </div>
 

@@ -67,9 +67,6 @@ public class MoviesPanel extends Panel {
         modalWindow = new ModalWindow("screeningsModal");
         modalWindow.setMaskType(ModalWindow.MaskType.SEMI_TRANSPARENT);
         modalWindow.setContent(screeningsPanel);
-        modalWindow.setResizable(false);
-        //modalWindow.setCssClassName("modal-dialog-custom");
-        modalWindow.setTitle(new StringResourceModel("screeningsModalTitle"));
     }
 
     private List<IColumn<Movie, String>> createColumns() {

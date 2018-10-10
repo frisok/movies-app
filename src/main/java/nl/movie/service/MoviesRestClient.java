@@ -14,4 +14,6 @@ public interface MoviesRestClient {
 
     Optional<String> login(String username, String password);
 
+    void updateMovies(String authenticationToken);
+
 }

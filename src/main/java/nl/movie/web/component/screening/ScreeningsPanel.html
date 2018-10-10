@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
-<wicket:panel>
+<wicket:panel class="modal-dialog">
 
-    <div>
-        <table wicket:id="screenings">
+    <div class="modal-header">
+        <h3 wicket:id="screeningPanelTitle" class="modal-title"/>
+    </div>
+
+    <div class="modal-body">
+        <table wicket:id="screenings" class="non-bootstrab-table">
             <thead>
             <tr class="headers">
                 <th>Stad</th>
