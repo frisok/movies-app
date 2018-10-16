@@ -1,16 +1,21 @@
 package nl.movie.web.page;
 
+import nl.movie.data.domain.MovieFilter;
 import nl.movie.service.MoviesRestClient;
+import nl.movie.web.component.filter.FilterMoviesPanel;
 import nl.movie.web.component.login.LoginPanel;
 import nl.movie.web.component.movie.MoviesPanel;
+import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -41,14 +46,15 @@ public class HomePage extends WebPage {
         add(new FeedbackPanel("feedback"));
 
         final MoviesPanel moviesPanel = new MoviesPanel("movies-panel", () -> {
-            return "amsterdam";
-        }) {
+            return MovieFilter.builder().city("Amsterdam").build();
+        });
+
+        add(new FilterMoviesPanel("filter-panel") {
             @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                setOutputMarkupId(true);
+            public Component getTargetComponent() {
+                return moviesPanel;
             }
-        };
+        });
         add(moviesPanel);
 
         add(ajaxLink(moviesPanel, "amsterdam"));
@@ -65,7 +71,7 @@ public class HomePage extends WebPage {
                 super.onConfigure();
                 setVisible(WebSession.get().getAttribute(AUTHENTICATION_TOKEN) != null);
             }
-        }.add(new AjaxButton("refresh") {
+        }.add(new IndicatingAjaxButton("refresh") {
 
                     @Override
                     public void onSubmit(final AjaxRequestTarget target) {
@@ -82,7 +88,7 @@ public class HomePage extends WebPage {
             public void onClick(AjaxRequestTarget target) {
                 target.add(moviesPanel);
                 moviesPanel.setDefaultModel(() -> {
-                    return city;
+                    return MovieFilter.builder().city(city).build();
                 });
             }
         };

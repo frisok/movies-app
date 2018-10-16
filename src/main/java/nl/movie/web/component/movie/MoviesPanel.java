@@ -1,10 +1,12 @@
 package nl.movie.web.component.movie;
 
 import nl.movie.data.domain.Movie;
+import nl.movie.data.domain.MovieFilter;
 import nl.movie.service.MoviesRestClient;
 import nl.movie.web.component.image.ExternalSourceImage;
 import nl.movie.web.component.screening.ScreeningsAjaxLinkPanel;
 import nl.movie.web.component.screening.ScreeningsPanel;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -26,6 +28,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -40,7 +43,7 @@ public class MoviesPanel extends Panel {
     private ModalWindow modalWindow;
 
 
-    public MoviesPanel(String id, IModel<String> model) {
+    public MoviesPanel(String id, IModel<MovieFilter> model) {
 
         super(id, model);
         screeningsPanel = new ScreeningsPanel("content", selectedItem);
@@ -51,7 +54,11 @@ public class MoviesPanel extends Panel {
 
             @Override
             protected List<Movie> getData() {
-                return moviesRestClient.findByCity(getDefaultModelObjectAsString());
+                final MovieFilter modelObject = (MovieFilter) getDefaultModelObject();
+                return moviesRestClient.findByCity(StringUtils.isNotBlank(modelObject.getCity()) ? modelObject.getCity() : "all")
+                        .stream()
+                        .filter(m -> StringUtils.isBlank(modelObject.getTitle()) || StringUtils.containsIgnoreCase(m.getTitle(), modelObject.getTitle()))
+                        .collect(Collectors.toList());
             }
 
         }, 1000);
@@ -138,5 +145,12 @@ public class MoviesPanel extends Panel {
         };
 
     }
+
+    @Override
+    protected void onConfigure() {
+        super.onConfigure();
+        setOutputMarkupId(true);
+    }
+
 }
 

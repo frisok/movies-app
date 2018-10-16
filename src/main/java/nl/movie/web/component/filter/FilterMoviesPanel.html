@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter movies panel</title>
+</head>
+<body>
+<wicket:panel>
+
+    <form id="filterForm" method="post" wicket:id="filterForm" class="">
+        <fieldset>
+            <div class="form-group row">
+                <span wicket:id="titleLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="text" wicket:id="title" class="form-control-plaintext">
+                </div>
+            </div>
+            <div class="form-group row">
+                <span wicket:id="cityLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="text" wicket:id="city">
+                </div>
+            </div>
+            <div class="form-group row">
+                <span wicket:id="startLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="date" wicket:id="start">
+                </div>
+            </div>
+            <div class="form-group row">
+                <span wicket:id="endLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="date" wicket:id="end">
+                </div>
+            </div>
+            <div class="form-group row">
+                <span wicket:id="childFriendlyLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="checkbox" wicket:id="childFriendly">
+                </div>
+            </div>
+            <div class="form-group row">
+                <span wicket:id="distanceLabel" class="col-sm-2 col-form-label"/>
+
+                <div class="col-sm-10">
+                    <input type="number" wicket:id="maxDistanceinKM">
+                </div>
+            </div>
+            <button wicket:id="filterButton" type="submit" class="btn btn-success"><span wicket:id="filterLabel"/>
+            </button>
+        </fieldset>
+    </form>
+
+</wicket:panel>
+
+</body>
+</html>
