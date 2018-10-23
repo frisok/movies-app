@@ -46,7 +46,7 @@ public class HomePage extends WebPage {
         add(new FeedbackPanel("feedback"));
 
         final MoviesPanel moviesPanel = new MoviesPanel("movies-panel", () -> {
-            return MovieFilter.builder().city("Amsterdam").build();
+            return MovieFilter.builder().city("amsterdam").build();
         });
 
         add(new FilterMoviesPanel("filter-panel") {
