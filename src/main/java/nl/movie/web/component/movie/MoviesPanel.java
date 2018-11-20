@@ -6,16 +6,11 @@ import nl.movie.service.MoviesRestClient;
 import nl.movie.web.component.image.ExternalSourceImage;
 import nl.movie.web.component.screening.ScreeningsAjaxLinkPanel;
 import nl.movie.web.component.screening.ScreeningsPanel;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -28,7 +23,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -54,11 +48,7 @@ public class MoviesPanel extends Panel {
 
             @Override
             protected List<Movie> getData() {
-                final MovieFilter modelObject = (MovieFilter) getDefaultModelObject();
-                return moviesRestClient.findByCity(StringUtils.isNotBlank(modelObject.getCity()) ? modelObject.getCity() : "all")
-                        .stream()
-                        .filter(m -> StringUtils.isBlank(modelObject.getTitle()) || StringUtils.containsIgnoreCase(m.getTitle(), modelObject.getTitle()))
-                        .collect(Collectors.toList());
+                return moviesRestClient.findByFilter((MovieFilter) getDefaultModelObject());
             }
 
         }, 1000);

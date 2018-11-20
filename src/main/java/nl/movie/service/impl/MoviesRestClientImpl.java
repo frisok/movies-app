@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import nl.movie.data.domain.Movie;
+import nl.movie.data.domain.MovieFilter;
 import nl.movie.service.MoviesRestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -32,18 +34,18 @@ public class MoviesRestClientImpl implements MoviesRestClient {
 
 
     @Override
-    public List<Movie> findByCity(final String city) {
+    public List<Movie> findByFilter(final MovieFilter movieFilter) {
 
         List<Movie> movies = new ArrayList<>();
 
-        final ResponseEntity<String> response = callRestForMoviesByCity(city);
+        final ResponseEntity<String> response = callRestForMoviesByCity(movieFilter.getCity());
 
         if (response.getStatusCode().is2xxSuccessful()) {
             movies = new Gson().fromJson(response.getBody(), new TypeToken<List<Movie>>() {
             }.getType());
         }
 
-        return movies;
+        return filter(movieFilter, movies);
     }
 
     private ResponseEntity<String> callRestForMoviesByCity(final String city) {
@@ -51,7 +53,8 @@ public class MoviesRestClientImpl implements MoviesRestClient {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         try {
-            if (StringUtils.equalsAnyIgnoreCase(city, "all")) {
+            if (StringUtils.isBlank(city
+            ) || StringUtils.equalsAnyIgnoreCase(city, "all")) {
                 response = new RestTemplate().getForEntity("http://localhost:8080/movies", String.class);
             } else {
                 response = new RestTemplate().getForEntity("http://localhost:8080/movies/{city}", String.class, city);
@@ -62,6 +65,13 @@ public class MoviesRestClientImpl implements MoviesRestClient {
 
 
         return response;
+    }
+
+    private List<Movie> filter(MovieFilter movieFilter, List<Movie> movies) {
+        return movies.stream()
+                .filter(m -> StringUtils.isNotBlank(movieFilter.getTitle()) ? StringUtils.containsIgnoreCase(m.getTitle(), movieFilter.getTitle()) : true)
+                .filter(m -> movieFilter.isChildFriendly() ? StringUtils.equalsAnyIgnoreCase(m.getMovieDetails().getRated(), "G") || StringUtils.equalsAnyIgnoreCase(m.getMovieDetails().getRated(), "PG") : true)
+                .collect(Collectors.toList());
     }
 
     /**
